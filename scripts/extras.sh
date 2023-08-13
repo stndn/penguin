@@ -30,7 +30,7 @@ apt update && apt install -y vim
 
 # Install extras
 echo "Installing extra packages ..."
-apt install net-tools postgresql-client
+apt install net-tools postgresql-client libpq-dev
 
 # Clean up unused packages
 apt -y autoremove
