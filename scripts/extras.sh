@@ -36,6 +36,12 @@ apt install net-tools postgresql-client libpq-dev
 apt -y autoremove
 
 
+# Update and install Python 3.11
+echo "Update to Python 3.11 ..."
+add-apt-repository ppa:deadsnakes/ppa
+apt update && apt install -y python3.11
+
+
 # Install docker and docker-compose
 
 # 1. Install dependencies
