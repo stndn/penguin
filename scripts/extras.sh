@@ -30,27 +30,10 @@ apt update && apt install -y vim
 
 # Install extras
 echo "Installing extra packages ..."
-apt install net-tools postgresql-client libpq-dev
+apt install -y net-tools postgresql-client libpq-dev python3-pip
 
 # Clean up unused packages
 apt -y autoremove
-
-
-# Update and install Python 3.11
-echo "Update to Python 3.11 ..."
-add-apt-repository ppa:deadsnakes/ppa
-apt update && apt install -y python3.11
-
-# Install pip
-echo "Install pip ..."
-curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-python3.11 get-pip.py
-
-# Set alternatives
-echo "Set python3 version ..."
-update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 110
-update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 100
-update-alternatives --config python3
 
 
 # Install docker and docker-compose
