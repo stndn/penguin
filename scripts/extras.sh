@@ -36,25 +36,25 @@ apt install -y net-tools postgresql-client libpq-dev python3-pip
 apt -y autoremove
 
 
-# Install docker and docker-compose
-
-# 1. Install dependencies
-apt -y install apt-transport-https ca-certificates curl software-properties-common
-
-# 2. Get the GPG for docker
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-
-# 3. Add docker repository to APT sources
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# 4. Update packages and check the package to be installed
-apt update && apt-cache policy docker-ce
-
-# 5. Install docker
-apt -y install docker-ce
-
-# 6. Give permission for user to execute docker without root
-usermod -aG docker username
+## # Install docker and docker-compose
+## 
+## # 1. Install dependencies
+## apt -y install apt-transport-https ca-certificates curl software-properties-common
+## 
+## # 2. Get the GPG for docker
+## curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+## 
+## # 3. Add docker repository to APT sources
+## echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+## 
+## # 4. Update packages and check the package to be installed
+## apt update && apt-cache policy docker-ce
+## 
+## # 5. Install docker
+## apt -y install docker-ce
+## 
+## # 6. Give permission for user to execute docker without root
+## usermod -aG docker username
 
 
 # Add system-wide history with timestamp
