@@ -80,6 +80,19 @@ Summary of [Certbot installation][url-certbot-install]:
     nginx -s reload
     ```
 
+### Automated certificate renewal
+
+Based on the [documentation on automated certificate renewal][url-certbox-auto-renew], most Certbot installations come with automated renewals pre-configured. As such, we do not need to set up our own certificate renewal.
+
+Using the `snap` insallation above, the scheduler should be setup as part of the `systemd` service, which we can verify by issuing the following command:
+```
+systemctl list-timers | grep certbot
+```
+which will show output similar to this:
+```
+Thu 2023-10-05 00:22:00 +08 5h 26min left Wed 2023-10-04 12:30:07 +08 6h ago       snap.certbot.renew.timer       snap.certbot.renew.service
+```
+
 
 ### Notes
 
@@ -95,3 +108,4 @@ mv /etc/nginx/conf.d/default.conf{,.bak}
 [url-certbot]: https://certbot.eff.org/ "Certbot"
 [url-certbot-install]: https://certbot.eff.org/instructions?ws=nginx&os=ubuntufocal "Certbot instruction"
 [url-nginx-samples]: /webserver/nginx-conf.d/ "Sample Nginx configuration files"
+[url-certbox-auto-renew]: https://eff-certbot.readthedocs.io/en/stable/using.html#automated-renewals
