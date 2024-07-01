@@ -4,9 +4,9 @@
 # This should be after the root extras
 
 # Download docker-compose
-# Adjust the version from 2.3.3 to latest version available in https://github.com/docker/compose/releases
+# Adjust the version from 2.28.1 to latest version available in https://github.com/docker/compose/releases
 mkdir -p ~/.docker/cli-plugins/
-curl -SL https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
+curl -SL https://github.com/docker/compose/releases/download/v2.28.1/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
 chmod +x ~/.docker/cli-plugins/docker-compose
 
 # Verify docker compose version
