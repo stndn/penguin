@@ -1,5 +1,9 @@
 #/bin/bash
 
+# References:
+# For sshd_config to take effect: https://askubuntu.com/a/1534466/1139477 (Ubuntu 24.04)
+
+
 # Configurations to be used in the script
 CFG_MAIN_USER="example"             # Main user for additional set up (e.g. Docker)
 CFG_TIMEZONE="Asia/Kuala_Lumpur"    # Timezone for the server
@@ -53,7 +57,22 @@ if [ "${CFG_INSTALL_SSHD_CONFIG}" -eq 1 ]; then
   if [ -f /etc/ssh/sshd_config.d/18-custom.conf ]; then
     mv /etc/ssh/sshd_config.d/18-custom.conf /etc/ssh/sshd_config.d/18-custom.conf.${CFG_TIMESTAMP}.bak
   fi
-  cp -p ../etc/ssh/sshd_config.d/18-custom.conf /etc/ssh/sshd_config.d
+  cp ../etc/ssh/sshd_config.d/18-custom.conf /etc/ssh/sshd_config.d
+  chmod 600 /etc/ssh/sshd_config.d/18-custom.conf
+
+  printf "${CFG_LOG_TXT} Socket configuration must be re-generated after changing Port, AddressFamily, or ListenAddress."
+  printf "${CFG_LOG_TXT} For changes to take effect, run:\n\n"
+  printf "   systemctl daemon-reload && systemctl restart ssh.socket\n"
+  printf "   systemctl restart ssh\n"
+
+  if [ -f /etc/ssh/sshd_config.d/50-cloud-init.conf ]; then
+    grep -E "^PasswordAuthentication yes$" /etc/ssh/sshd_config.d/50-cloud-init.conf > /dev/null
+    RETCHECK=$?
+    if [[ RETCHECK -eq 0 ]]; then
+      printf "${CFG_LOG_TXT} Disable the 'PasswordAuthentication yes' setting that is present in '50-cloud-init.conf'\n"
+      sed -i -E 's/^(PasswordAuthentication yes)$/# \1/' /etc/ssh/sshd_config.d/50-cloud-init.conf
+    fi
+  fi
 fi
 
 
