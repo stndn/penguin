@@ -30,7 +30,7 @@ printf "${CFG_LOG_TXT} Always ask for password on every sudo command\n"
 sed -i -e 's/^\(Defaults\s\+\)env_reset$/\1env_reset,timestamp_timeout=0/' /etc/sudoers
 
 printf "${CFG_LOG_TXT} Install extra packages\n"
-apt install -y net-tools python3-pip ca-certificates curl
+apt install -y net-tools python3-pip ca-certificates curl tree htop
 
 printf "${CFG_LOG_TXT} Clean up unused packages\n"
 apt -y autoremove
