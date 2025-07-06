@@ -4,6 +4,8 @@
 # Ubuntu 24.04 only: For sshd_config to take effect: https://askubuntu.com/a/1534466/1139477
 
 
+SCRIPT_DIR=$(dirname $0)
+
 # Configurations to be used in the script
 CFG_TIMEZONE="Asia/Kuala_Lumpur"    # Timezone for the server
 CFG_TIMESTAMP=$(date "+%Y%m%d")
@@ -50,12 +52,12 @@ fi
 if [ "${CFG_INSTALL_SSHD_CONFIG}" -eq 1 ]; then
   # Override sshd_config
   printf "${CFG_LOG_TXT} Override sshd_config with custom file."
-  printf "${CFG_LOG_TXT} Please check '../etc/ssh/sshd_config.d/18-custom.conf' and update the settings as necessary.\n"
+  printf "${CFG_LOG_TXT} Please check '${SCRIPT_DIR}/../etc/ssh/sshd_config.d/18-custom.conf' and update the settings as necessary.\n"
 
   if [ -f /etc/ssh/sshd_config.d/18-custom.conf ]; then
     mv /etc/ssh/sshd_config.d/18-custom.conf /etc/ssh/sshd_config.d/18-custom.conf.${CFG_TIMESTAMP}.bak
   fi
-  cp ../etc/ssh/sshd_config.d/18-custom.conf /etc/ssh/sshd_config.d
+  cp ${SCRIPT_DIR}/../etc/ssh/sshd_config.d/18-custom.conf /etc/ssh/sshd_config.d
   chmod 600 /etc/ssh/sshd_config.d/18-custom.conf
 
   # Print extra configuration requirement for Ubuntu
