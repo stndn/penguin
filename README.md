@@ -10,7 +10,7 @@ All the files should go to their respective directory in the system.
 Install `git` to clone this repository and `vim` to use different efault text editor.
 
 ```
-apt update && apt install -y git vim
+sudo apt update && sudo apt install -y git vim
 ```
 
 ### Extras
