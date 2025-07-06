@@ -1,7 +1,7 @@
 #/bin/bash
 
 # References:
-# For sshd_config to take effect: https://askubuntu.com/a/1534466/1139477 (Ubuntu 24.04)
+# Ubuntu 24.04 only: For sshd_config to take effect: https://askubuntu.com/a/1534466/1139477
 
 
 # Configurations to be used in the script
@@ -58,10 +58,18 @@ if [ "${CFG_INSTALL_SSHD_CONFIG}" -eq 1 ]; then
   cp ../etc/ssh/sshd_config.d/18-custom.conf /etc/ssh/sshd_config.d
   chmod 600 /etc/ssh/sshd_config.d/18-custom.conf
 
-  printf "${CFG_LOG_TXT} Socket configuration must be re-generated after changing Port, AddressFamily, or ListenAddress."
-  printf "${CFG_LOG_TXT} For changes to take effect, run:\n\n"
-  printf "   systemctl daemon-reload && systemctl restart ssh.socket\n"
-  printf "   systemctl restart ssh\n"
+  # Print extra configuration requirement for Ubuntu
+  if [ -f /etc/os-release ]; then
+    OS_ID=$(cat /etc/os-release | grep '^ID=' | awk -F'=' '{print $2}')
+    if [ "${OS_ID}" == "ubuntu" ]; then
+      printf "${CFG_LOG_TXT} Ubuntu 24.04: Socket configuration must be re-generated after changing Port, AddressFamily, or ListenAddress."
+      printf "${CFG_LOG_TXT} For changes to take effect, run:\n\n"
+      printf "   systemctl daemon-reload && systemctl restart ssh.socket\n"
+    fi
+
+    printf "${CFG_LOG_TXT} Restart ssh service for the sshd configuration changes to take effect:\n\n"
+    printf "   systemctl restart ssh\n"
+  fi
 
   if [ -f /etc/ssh/sshd_config.d/50-cloud-init.conf ]; then
     grep -E "^PasswordAuthentication yes$" /etc/ssh/sshd_config.d/50-cloud-init.conf > /dev/null
